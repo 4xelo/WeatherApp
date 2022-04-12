@@ -8,16 +8,9 @@
 import UIKit
 
 
-struct WeatherInfo {
-    let day: String
-    let weather: String
-    let humidity: String
-    let temperature: String
-}
-
 class WeatherDetailViewController: UIViewController {
     
-    
+    //MARK: - Outlets
     
     @IBOutlet weak var TableView: UITableView!
     @IBOutlet weak var DateLabel: UILabel!
@@ -26,20 +19,21 @@ class WeatherDetailViewController: UIViewController {
     @IBOutlet weak var WeatherLabel: UILabel!
     @IBOutlet weak var FeelsLikeLabel: UILabel!
     
-    
-    var weatherArray: [WeatherInfo] {
-           [WeatherInfo(day: "Monday", weather: "Rain", humidity: "80%", temperature: "16°C"),
-            WeatherInfo(day: "Tuesday", weather: "Sun", humidity: "40%", temperature: "25°C"),
-            WeatherInfo(day: "Wednesday", weather: "Rain", humidity: "70%", temperature: "19°C"),
-            WeatherInfo(day: "Thursday", weather: "Rain", humidity: "90%", temperature: "20°C"),
-            WeatherInfo(day: "Friday", weather: "Rain", humidity: "65%", temperature: "18°C"),
-            WeatherInfo(day: "Saturday", weather: "Sun", humidity: "30%", temperature: "27°C"),
-            WeatherInfo(day: "Sunday", weather: "Sun", humidity: "35%", temperature: "26°C")]
+    //MARK: - Variables
+    var days: [ForecastDay] {
+        [ForecastDay(title: "Monday", temperature: "16", perception: 80, state: WeatherState.rainy),
+            ForecastDay(title: "Tuesday", temperature: "25", perception: 40, state: WeatherState.sunny),
+            ForecastDay(title: "Wednesday", temperature: "27", perception: 20, state: WeatherState.sunny),
+            ForecastDay(title: "Thursday", temperature: "17", perception: 90, state: WeatherState.rainy),
+            ForecastDay(title: "Friday", temperature: "21", perception: 70, state: WeatherState.cloudy),
+            ForecastDay(title: "Saturday", temperature: "24", perception: 10, state: WeatherState.sunny),
+            ForecastDay(title: "Sunday", temperature: "26", perception: 10, state: WeatherState.sunny)]
        }
     
     
     var weatherDays: [String] {["Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday"]}
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         //TableView.tableHeaderView = nil
         TableView.dataSource = self
@@ -49,14 +43,16 @@ class WeatherDetailViewController: UIViewController {
         
     }
 }
+
+//MARK: - Table View Data Source
 extension WeatherDetailViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherArray.count
+        return days.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,8 +62,7 @@ extension WeatherDetailViewController: UITableViewDataSource {
                     
                     return UITableViewCell()
                 }
-        let weather = WeatherTableViewCell.Weather(weatherInfo: weatherArray[indexPath.row])
-        weatherCell.setupView(weatherInfo: weather)
+        weatherCell.setupCell(with: days[indexPath.row])
         return weatherCell
         
         

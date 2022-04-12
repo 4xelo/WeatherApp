@@ -12,32 +12,27 @@ import UIKit
 class WeatherTableViewCell: UITableViewCell {
 
     
-    static var classString: String {
-        String(describing: WeatherTableViewCell.self)
-    }
-    struct Weather {
-        
-        let day:String
-        let weather:String
-        let humidity:String
-        let temperature:String
-        
-        init(weatherInfo: WeatherInfo){
-            day = weatherInfo.day
-            weather = weatherInfo.weather
-            humidity = weatherInfo.humidity
-            temperature = weatherInfo.temperature
-        }
-    }
     
+    // MARK: - Outlets
     @IBOutlet weak var weatherDayLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherTemperatureLabel: UILabel!
     @IBOutlet weak var weatherHumidityLabel: UILabel!
     
-    func setupView(weatherInfo:Weather) {
-        weatherDayLabel.text = weatherInfo.day
-        weatherHumidityLabel.text = weatherInfo.humidity
-        weatherTemperatureLabel.text = weatherInfo.temperature
-    }
+    
+    // MARK: - Static
+    static var classString: String { String(describing: WeatherTableViewCell.self) }
 }
+    
+extension WeatherTableViewCell {
+    //MARK: - Public
+    func setupCell(with day: ForecastDay) {
+        weatherDayLabel.text = day.title
+        weatherImageView.image = day.state.icon?.withRenderingMode(.alwaysOriginal)
+        weatherHumidityLabel.text = day.perceptionWithPercentage
+        weatherTemperatureLabel.text = day.temperatureWithCelsius
+        
+    }
+    
+}
+

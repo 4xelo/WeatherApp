@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,13 +12,13 @@
         <!--Weather-->
         <scene sceneID="j9K-lh-Znj">
             <objects>
-                <viewController id="iLb-Bw-Tpn" customClass="WeatherDetailViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idecko" id="iLb-Bw-Tpn" customClass="WeatherDetailViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZKx-C2-Jui">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dTO-FW-Kx8">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="V4M-IQ-yWO">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="345"/>
@@ -34,6 +35,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bo4-Yw-WPU">
                                                     <rect key="frame" x="0.0" y="1" width="19.5" height="27.5"/>
+                                                    <color key="tintColor" name="Location.Fill"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="19.5" id="39X-Iz-oZT"/>
                                                     </constraints>
@@ -118,7 +120,15 @@
                             <constraint firstItem="O0s-mW-I9W" firstAttribute="trailing" secondItem="dTO-FW-Kx8" secondAttribute="trailing" id="ml2-bn-Y3k"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Weather" id="Nz1-30-5KE"/>
+                    <tabBarItem key="tabBarItem" title="Location" image="location.fill" catalog="system" id="SXD-aD-0GU"/>
+                    <navigationItem key="navigationItem" title="Weather" id="Nz1-30-5KE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="wDK-pi-ctk">
+                            <connections>
+                                <action selector="Search:" destination="iLb-Bw-Tpn" id="SOU-Kg-9HL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="DateLabel" destination="LPm-qX-iR0" id="5oM-F1-6JW"/>
                         <outlet property="FeelsLikeLabel" destination="Tb6-ab-vVy" id="2Zu-Rq-0wi"/>
@@ -151,6 +161,9 @@
     </scenes>
     <resources>
         <image name="location.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="Location.Fill">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import CoreLocation
 
 class WeatherDetailViewController: UIViewController {
     
@@ -20,6 +20,13 @@ class WeatherDetailViewController: UIViewController {
     @IBOutlet weak var FeelsLikeLabel: UILabel!
     
     //MARK: - Variables
+        
+    var place: Place?
+    
+    var refreshControl = UIRefreshControl()
+    
+    
+    
     var days: [ForecastDay] {
         [ForecastDay(title: "Monday", temperature: "16", perception: 80, state: WeatherState.rainy),
             ForecastDay(title: "Tuesday", temperature: "25", perception: 40, state: WeatherState.sunny),
@@ -31,13 +38,30 @@ class WeatherDetailViewController: UIViewController {
        }
     
     
-    var weatherDays: [String] {["Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday"]}
+    @IBAction func Search(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "SearchViewController", bundle: nil)
+        if let navigationController = storyboard.instantiateInitialViewController()  {
+            present(navigationController, animated: true)
+        }
+    }
+    
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         //TableView.tableHeaderView = nil
-        TableView.dataSource = self
+        super.viewDidLoad()
         
+        LocationLabel.text = place?.city
+        
+        LocationManager.shared.getLocation { [weak self] location, error in
+            if let error = error {
+                print("Tu je chyba")
+            } else if let location = location {
+                self?.LocationLabel.text = location.city
+            }
+        }
+        
+        TableView.dataSource = self
         TableView.register(UINib(nibName: WeatherTableViewCell.classString, bundle: nil), forCellReuseIdentifier: WeatherTableViewCell.classString)
         super.viewDidLoad()
         
@@ -62,22 +86,8 @@ extension WeatherDetailViewController: UITableViewDataSource {
                     
                     return UITableViewCell()
                 }
-        weatherCell.setupCell(with: days[indexPath.row])
+            weatherCell.setupCell(with: days[indexPath.row])
         return weatherCell
         
-        
-    }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int)->String? {
-        return "Header in \(section).section"
-        
-    }
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "Footer in \(section).section"
-    }
-}
-extension WeatherDetailViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
     }
 }

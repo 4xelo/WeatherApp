@@ -57,6 +57,15 @@ class WeatherDetailViewController: UIViewController {
             if let error = error {
                 print("Tu je chyba")
             } else if let location = location {
+                RequestManager.shared.getWeatherData(for: location.coordinates) { response in
+                    switch response {
+                    case .success(let weatherData):
+                        self?.TemperatureLabel.text = "\(weatherData.current.temp)"
+                    case .failure(let error):
+                        print(error)
+                    }//posunutie o vrstvu, kontroler ziskal data, potrebuje uz iba konkretny objekt
+                }
+                
                 self?.LocationLabel.text = location.city
             }
         }

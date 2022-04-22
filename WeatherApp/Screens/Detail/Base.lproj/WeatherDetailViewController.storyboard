@@ -135,7 +135,6 @@
                         <outlet property="FeelsLikeLabel" destination="Tb6-ab-vVy" id="2Zu-Rq-0wi"/>
                         <outlet property="LocationLabel" destination="5tZ-4P-pXV" id="8l4-lb-0p0"/>
                         <outlet property="TableView" destination="dTO-FW-Kx8" id="YY7-l9-KAD"/>
-                        <outlet property="TemperatureLabel" destination="eiy-M2-7h6" id="GRc-rp-fCK"/>
                         <outlet property="WeatherLabel" destination="eiy-M2-7h6" id="lCL-Bs-LwM"/>
                     </connections>
                 </viewController>

@@ -26,11 +26,15 @@ class WeatherTableViewCell: UITableViewCell {
     
 extension WeatherTableViewCell {
     //MARK: - Public
-    func setupCell(with day: ForecastDay) {
-        weatherDayLabel.text = day.title
-        weatherImageView.image = day.state.icon?.withRenderingMode(.alwaysOriginal)
-        weatherHumidityLabel.text = day.perceptionWithPercentage
-        weatherTemperatureLabel.text = day.temperatureWithCelsius
+    func setupCell(with day: DailyWeather) {
+        //formatter ako singleton
+        
+        
+        
+        weatherDayLabel.text = DateFormatter.dayDateFormatter.string(from: day.date)
+        weatherImageView.image = day.weather.first?.image?.withRenderingMode(.alwaysOriginal)
+        weatherHumidityLabel.text = day.formattedPercipitation
+        weatherTemperatureLabel.text = day.temp.temperatureWithCelsius
         
     }
     

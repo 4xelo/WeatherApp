@@ -24,19 +24,10 @@ class WeatherDetailViewController: UIViewController {
     var place: Place?
     
     var refreshControl = UIRefreshControl()
+    var days = [DailyWeather]()
     
-    
-    
-    var days: [ForecastDay] {
-        [ForecastDay(title: "Monday", temperature: "16", perception: 80, state: WeatherState.rainy),
-            ForecastDay(title: "Tuesday", temperature: "25", perception: 40, state: WeatherState.sunny),
-            ForecastDay(title: "Wednesday", temperature: "27", perception: 20, state: WeatherState.sunny),
-            ForecastDay(title: "Thursday", temperature: "17", perception: 90, state: WeatherState.rainy),
-            ForecastDay(title: "Friday", temperature: "21", perception: 70, state: WeatherState.cloudy),
-            ForecastDay(title: "Saturday", temperature: "24", perception: 10, state: WeatherState.sunny),
-            ForecastDay(title: "Sunday", temperature: "26", perception: 10, state: WeatherState.sunny)]
-       }
-    
+ 
+
     
     @IBAction func Search(_ sender: Any) {
         let storyboard = UIStoryboard(name: "SearchViewController", bundle: nil)
@@ -54,26 +45,38 @@ class WeatherDetailViewController: UIViewController {
         LocationLabel.text = place?.city
         
         LocationManager.shared.getLocation { [weak self] location, error in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("Tu je chyba")
             } else if let location = location {
-                RequestManager.shared.getWeatherData(for: location.coordinates) { response in
+                RequestManager.shared.getWeatherData(for: location.coordinates) {[weak self] response in
                     switch response {
                     case .success(let weatherData):
-                        self?.TemperatureLabel.text = "\(weatherData.current.temp)"
+                        self?.setupView(with: weatherData.current)
+                        self?.days = weatherData.days
+                        self?.TableView.reloadData()
                     case .failure(let error):
                         print(error)
                     }//posunutie o vrstvu, kontroler ziskal data, potrebuje uz iba konkretny objekt
                 }
                 
-                self?.LocationLabel.text = location.city
+                self.LocationLabel.text = location.city
             }
         }
         
         TableView.dataSource = self
-        TableView.register(UINib(nibName: WeatherTableViewCell.classString, bundle: nil), forCellReuseIdentifier: WeatherTableViewCell.classString)
+        TableView.register(UINib(nibName: WeatherTableViewCell.classString, bundle: nil),
+                           forCellReuseIdentifier: WeatherTableViewCell.classString)
         super.viewDidLoad()
         
+    }
+    
+    func setupView(with currentWeather: CurrentWeather) {
+       
+        TemperatureLabel.text = currentWeather.temperatureWithCelsius
+        FeelsLikeLabel.text = currentWeather.formatedFeelsLikeWithCelsius
+        WeatherLabel.text = currentWeather.weather.first?.description
     }
 }
 
@@ -95,7 +98,7 @@ extension WeatherDetailViewController: UITableViewDataSource {
                     
                     return UITableViewCell()
                 }
-            weatherCell.setupCell(with: days[indexPath.row])
+        weatherCell.setupCell(with: days[indexPath.row])
         return weatherCell
         
     }

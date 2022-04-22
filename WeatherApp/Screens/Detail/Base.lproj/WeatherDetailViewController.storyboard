@@ -25,13 +25,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Date]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPm-qX-iR0">
-                                            <rect key="frame" x="16" y="16" width="128" height="24"/>
+                                            <rect key="frame" x="16" y="16" width="398" height="24"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="p05-Zk-Dtj">
-                                            <rect key="frame" x="16" y="48" width="128" height="29"/>
+                                            <rect key="frame" x="16" y="48" width="398" height="29"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bo4-Yw-WPU">
                                                     <rect key="frame" x="0.0" y="1" width="19.5" height="27.5"/>
@@ -41,7 +41,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Location]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tZ-4P-pXV">
-                                                    <rect key="frame" x="22.5" y="0.0" width="105.5" height="29"/>
+                                                    <rect key="frame" x="22.5" y="0.0" width="375.5" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="105.5" id="16g-Mc-ssL"/>
                                                     </constraints>
@@ -85,6 +85,7 @@
                                         <constraint firstItem="LPm-qX-iR0" firstAttribute="leading" secondItem="V4M-IQ-yWO" secondAttribute="leading" constant="16" id="o2F-PA-sGx"/>
                                         <constraint firstAttribute="trailing" secondItem="Pxg-J8-i7D" secondAttribute="trailing" id="qyh-pZ-VvI"/>
                                         <constraint firstItem="Pxg-J8-i7D" firstAttribute="leading" secondItem="V4M-IQ-yWO" secondAttribute="leading" constant="16" id="w8b-td-mDp"/>
+                                        <constraint firstAttribute="trailing" secondItem="p05-Zk-Dtj" secondAttribute="trailing" id="wAl-4Z-43P"/>
                                     </constraints>
                                 </view>
                                 <prototypes>

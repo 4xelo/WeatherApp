@@ -40,9 +40,14 @@ class WeatherDetailViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         //TableView.tableHeaderView = nil
-        super.viewDidLoad()
         
+        super.viewDidLoad()
+        TableView.dataSource = self
         LocationLabel.text = place?.city
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, YYYY"
+        DateLabel.text = formatter.string(from: Date())
         
         LocationManager.shared.getLocation { [weak self] location, error in
             guard let self = self else { return }
@@ -65,17 +70,15 @@ class WeatherDetailViewController: UIViewController {
             }
         }
         
-        TableView.dataSource = self
         TableView.register(UINib(nibName: WeatherTableViewCell.classString, bundle: nil),
                            forCellReuseIdentifier: WeatherTableViewCell.classString)
-        super.viewDidLoad()
         
     }
     
     func setupView(with currentWeather: CurrentWeather) {
        
         TemperatureLabel.text = currentWeather.temperatureWithCelsius
-        FeelsLikeLabel.text = currentWeather.formatedFeelsLikeWithCelsius
+        FeelsLikeLabel.text = "Feels like \(currentWeather.formatedFeelsLikeWithCelsius)"
         WeatherLabel.text = currentWeather.weather.first?.description
     }
 }

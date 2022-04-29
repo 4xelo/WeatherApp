@@ -29,7 +29,7 @@ class SearchManager: NSObject {
     override init() {
         super.init()
         
-        searchCompleter.delegate.self
+        searchCompleter.delegate = self
         searchCompleter.resultTypes = .address
     }
     func getLocalSearchResult(from query: String, completion: @escaping LocalSearchCompletionHandler) {
@@ -54,6 +54,4 @@ extension SearchManager: MKLocalSearchCompleterDelegate {
         searchCompletion?(places)
         
     }
-    
-    
 }

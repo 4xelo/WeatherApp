@@ -34,7 +34,7 @@ struct CurrentWeather: Decodable {
     let weather: [Weather]
 
     var temperatureWithCelsius: String { "\(Int(temp))°C"}
-    var formatedFeelsLikeWithCelsius: String { "\(Int(feelsLike))°C"}
+    var formatedFeelsLikeWithCelsius: String { "Feels like \(Int(feelsLike))°C"}
     enum CodingKeys: String, CodingKey {
         case date = "dt"
         case temp
@@ -75,7 +75,7 @@ struct Weather: Decodable {
         case "03d":
             return UIImage(systemName: "cloud.fill")
         case "04d":
-            return UIImage(systemName: "clouds.fill")
+            return UIImage(systemName: "cloud.fill")
         case "11d":
             return UIImage(systemName: "cloud.bolt.fill")
         case "09d":

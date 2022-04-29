@@ -20,7 +20,7 @@ struct RequestManager {
             latitude: "\(cordinates.latitude)",
             longitude: "\(cordinates.longitude)",
             exclude: "hourly,minutely,alerts",
-            appId: "72a7d7f4e9e4fc221f1889c9aa29ce34",
+            appId: "72a7d7f4e9e4fc221f1889c9aa29ce34",//34
             units: "metric")
 
         let decoder = JSONDecoder()

@@ -18,6 +18,7 @@ struct CurrentLocation {
 }
 
 typealias CityCompletionHandler = ((CurrentLocation?, Error?) -> Void)
+typealias AuthorizationHandler  = ((Bool?) -> Void)
 
 
 class LocationManager : CLLocationManager{
@@ -27,7 +28,10 @@ class LocationManager : CLLocationManager{
     
     
     var completion: CityCompletionHandler?
-   
+    var denied: Bool {
+        LocationManager.authorizationStatus() == .denied
+    }
+    var authorizationCompletion: AuthorizationHandler?
     
     
     func getLocation(completion: CityCompletionHandler?){
@@ -36,7 +40,20 @@ class LocationManager : CLLocationManager{
         startUpdatingLocation()
         delegate = self
     }
+    
+    func onAuthorizationChange(completion: @escaping AuthorizationHandler) {
+        authorizationCompletion = completion
+        
+    }
+    func getCoordinates(for city: String, completion: @escaping (CLLocationCoordinate2D) -> Void) {
+        geocoder.geocodeAddressString(city) { placemarks, error in
+            if let coordinates = placemarks?.first?.location?.coordinate {
+                completion(coordinates)
+            }
+        }
+    }
 }
+//MARK: - Location Manager Delegate
 
 extension LocationManager: CLLocationManagerDelegate {
     
@@ -62,15 +79,15 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .denied :
-            print("Denied")
+            authorizationCompletion?(false)
         case .authorizedWhenInUse, .authorizedAlways:
-            print ("Authorized")
+            authorizationCompletion?(true)
         case .restricted:
             print("Restricted")
         case .notDetermined:
             print("Not determined")
         @unknown default:
-            fatalError()
+            print("sth else")
         }
     }
 }

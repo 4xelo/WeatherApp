@@ -22,6 +22,7 @@ class SearchViewController: UIViewController {
         dismiss(animated: true)
     }
     //MARK: - Variables
+    
     private let searchController = UISearchController(searchResultsController: nil)
     private var places = [Place]()
     private let searchManager = SearchManager()
